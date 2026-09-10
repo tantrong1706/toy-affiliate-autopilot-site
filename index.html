@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Đồ chơi trẻ em - Tìm sản phẩm</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+            background: #f6f6f6;
+            color: #222;
+        }
+
+        .container {
+            width: min(900px, 94%);
+            margin: 0 auto;
+            padding: 30px 0 60px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .search {
+            width: 100%;
+            padding: 16px 18px;
+            font-size: 18px;
+            border: 1px solid #ddd;
+            border-radius: 14px;
+            outline: none;
+        }
+
+        .search:focus {
+            border-color: #333;
+        }
+
+        .help {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .products {
+            display: grid;
+            gap: 16px;
+            margin-top: 25px;
+        }
+
+        .product-card {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow:
+                0 2px 10px
+                rgba(0, 0, 0, 0.06);
+        }
+
+        .code {
+            display: inline-block;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 6px 10px;
+            background: #111;
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .product-card h2 {
+            font-size: 18px;
+            line-height: 1.45;
+            margin: 6px 0 12px;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .buy-button {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            background: #111;
+            color: white;
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .buy-button:hover {
+            opacity: 0.85;
+        }
+
+        #empty {
+            display: none;
+            text-align: center;
+            padding: 35px 10px;
+            color: #777;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 35px;
+            color: #888;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>🧸 Đồ chơi trẻ em</h1>
+
+        <div class="subtitle">
+            Tìm đúng sản phẩm bạn đã thấy trên TikTok
+        </div>
+
+        <input
+            id="search"
+            class="search"
+            type="search"
+            placeholder="Nhập mã, ví dụ: DC001"
+            autocomplete="off"
+        >
+
+        <div class="help">
+            Nhập mã xuất hiện trong bài TikTok.
+        </div>
+    </header>
+
+    <main
+        id="products"
+        class="products"
+    >
+        
+            <article
+                class="product-card"
+                data-code="dc001"
+                data-title="combo 20-40 mô hình nhân vật khác mẫu nhau lắp ráp toy tặng 2 bảng xếp hình abs 6cm cho trẻ học chơi chất liệu nhựa abs cao cấp"
+            >
+                <div class="code">DC001</div>
+
+                <h2>Combo 20-40 Mô Hình Nhân Vật Khác Mẫu Nhau Lắp Ráp Toy Tặng 2 Bảng Xếp Hình ABS 6cm Cho Trẻ Học Chơi Chất Liệu Nhựa ABS Cao Cấp</h2>
+
+                <div class="price">
+                    💰 79.000đ
+                </div>
+
+                <a
+                    class="buy-button"
+                    href="https://vt.tiktok.com/ZS9SP3w1DFYK5-3U5C0/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Xem sản phẩm
+                </a>
+            </article>
+            
+    </main>
+
+    <div id="empty">
+        Không tìm thấy sản phẩm với mã này.
+    </div>
+
+    <footer>
+        Giá và ưu đãi có thể thay đổi tại thời điểm mua.
+    </footer>
+
+</div>
+
+<script>
+const searchInput =
+    document.getElementById("search");
+
+const cards =
+    Array.from(
+        document.querySelectorAll(
+            ".product-card"
+        )
+    );
+
+const empty =
+    document.getElementById("empty");
+
+
+function filterProducts() {
+
+    const query =
+        searchInput.value
+        .trim()
+        .toLowerCase();
+
+    let visible = 0;
+
+    cards.forEach((card) => {
+
+        const code =
+            card.dataset.code || "";
+
+        const title =
+            card.dataset.title || "";
+
+        const show =
+            !query
+            || code.includes(query)
+            || title.includes(query);
+
+        card.style.display =
+            show
+            ? "block"
+            : "none";
+
+        if (show) {
+            visible++;
+        }
+
+    });
+
+    empty.style.display =
+        visible === 0
+        ? "block"
+        : "none";
+}
+
+
+searchInput.addEventListener(
+    "input",
+    filterProducts
+);
+
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const codeFromUrl =
+    params.get("code");
+
+if (codeFromUrl) {
+
+    searchInput.value =
+        codeFromUrl;
+
+    filterProducts();
+
+}
+</script>
+
+</body>
+</html>
